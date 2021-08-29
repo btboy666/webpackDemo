@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-08-03 16:34:20
- * @LastEditTime: 2021-08-20 18:32:10
+ * @LastEditTime: 2021-08-27 11:45:05
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /webpackDemo/webpack.config.js
@@ -15,8 +15,8 @@ const htmlwebpackplugin =require("html-webpack-plugin");
      //mode
      entry:"./src/index.js",
      output:{
-         path:path.resolve(__dirname,"./build"),
-         filename:"main.js"
+         path:path.resolve(__dirname,"./dist"),
+         filename:"lhsh.js"
 
      },
      mode:"development",
@@ -36,10 +36,28 @@ const htmlwebpackplugin =require("html-webpack-plugin");
              test:/\.css$/,
              use:["style-loader","css-loader"]
          }
-        //  ,{
-        //      test:/\.less$/,
-        //      use:""
-        //  }
+         ,{
+             test:/\.less$/,
+             use:["style-loader","css-loader","postcss-loader"]
+         },
+         {
+             test:/\.js$/,
+             use:{
+                loader:"babel-loader",
+                options:{
+                    presets:[["@babel/preset-env",{
+                       targets:{
+                           edge:"16",
+                           firefox:'60',
+                           chrome:'67',
+                       },
+                       corejs:2,
+                       useBuiltIns:"usage",
+                    }],
+                "@babel/preset-react"]
+                }
+             }
+         }
         ]
      },
      plugins:[
